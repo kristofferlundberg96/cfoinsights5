@@ -1,0 +1,22 @@
+{% extends 'survey/survey_base.html' %}
+{% load static %}
+
+{% block title %} CFO Insights 2018 International Survey {% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'survey/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="survey-wrapper" id="survey-questions">
+  <div class="content">
+    <div id="surveyContainer"></div>
+    <div class="powered-by">
+      <span class="children">
+        Survey powered by: <img src="{% static 'survey/kpmg.png' %}" alt="KPMG" id="kpmg_logo" />
+      </span>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

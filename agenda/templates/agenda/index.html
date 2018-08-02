@@ -1,0 +1,546 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+
+{% block header %}
+<div class="header">
+  <div class="title-bar" data-responsive-toggle="top-menu" data-hide-for="large">
+    <div class="title-bar-left">
+      <div class="title-bar-title">
+        <img src="{% static 'img/logo.png' %}" class="logo" alt="CFO Insights">
+      </div>
+    </div>
+    <div class="title-bar-right">
+      <button class="menu-icon" type="button" data-toggle></button>
+    </div>
+  </div>
+  <div class="top-bar" id="top-menu">
+    <div class="top-bar-left" id="desktop-logo">
+      <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" class="logo" alt="CFO Insights"></a>
+    </div>
+    <div class="top-bar-right">
+      <ul class="vertical large-horizontal menu">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a class="active" href="{% url 'index' %}#agenda">Agenda</a></li>
+        <li><a href="{% url 'index' %}#speakers">Speakers</a></li>
+        <li><a href="{% url 'index' %}#sponsors">Sponsors</a></li>
+        <li><a href="{% url 'index' %}#about">About</a></li>
+        <li><a href="{% url 'index' %}#tickets">Register now</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock%}
+
+{% block title %}
+CFO Insights - Agenda
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'agenda/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="subpage-hero" id="speakers-hero">
+  <div class="content">
+    <h1 class="subpage-header">Agenda</h1>
+    <p class="subheader">CFO Insights 2018 is organized around 3 main themes with 3 panels running in parallel each. Join us as we explore the role of the future CFO with 9 panel debates and 3 keynotes.</p>
+  </div>
+</section>
+
+<section>
+  <h2>The game plan</h2>
+  <div class="agenda-wrapper-full">
+    <div class="content">
+      <div class="agenda-narrow">
+        <h2><span class="agenda-time">08:00 - 09:00 </span>Registration & breakfast</h2>
+        <p class="push-right">Grab your event documentation package, some breakfast and exchange your first business cards.</p>
+        <h2><span class="agenda-time">09:00 - 09:05 </span>Official welcome to CFO Insights 2018</h2>
+        <p class="push-right">Get to know the practicalities of the day and be introduced to our conferencier.</p>
+        <h2 id="{{ panels.3.0.1.pk }}"><span class="agenda-time"">09:05 - 09:20 </span>Keynote 1: {% if panels.keynote1 %} {{ panels.keynote1.0.name }} {% else %} TBA {% endif %}</h2>
+        {% for speaker in panels.keynote1.0.speakers.all %}
+        <a class="card panelist-slug push-right" href="{% url 'speaker_detail' slug=speaker.slug %}">
+          <p class="speaker-name">{{ speaker.name }}</p>
+          <img src="{{ speaker.photo.url }}" class="speaker-img">
+          <div class="hover-overlay"></div>
+          <p class="speaker-title">{{ speaker.title }}</p>
+          <img class="company-logo" src="{{ speaker.company_logo.url }}">
+        </a>
+        {% endfor %}
+        <div class="push-right">{% if panels.keynote1.0 %} {{ panels.keynote1.0.description|safe }} {% else %} Stay tuned! {% endif %}</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="agenda-narrow">
+        <h2><span class="agenda-time">09:20 - 09:35</span>Breakout Session</h2>
+        <h2><span class="agenda-time">09:35 - 10:20</span>Strategy panels</h2>
+      </div>
+    </div>
+
+    <div class="panel-columns">
+      <div class="content">
+        <div class="grid-x grid-margin-x panels-grid">
+          <div class="large-6 cell" id="{{ panel.pk }}">
+            <div class="card panel-card">
+              <div class="card-divider panel-title">
+                <h2>
+                  Main Stage
+                </h2>
+              </div>
+              <div class="card-section panel-name">
+                <h3>
+                  {{ panels.strategy.2 }}
+                </h3>
+              </div>
+              <div class="card-section panel-speakers">
+                {% for speaker in panels.strategy.2.speakers.all %}
+                <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                  <p class="speaker-name">{{ speaker.name }}</p>
+                  <div class="agenda-speaker-image-block">
+                    {% if speaker.moderator %}
+                    <div class="moderator-speaker">
+                      <div class="moderator-icon-outer">
+                        <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <img src="{{ speaker.photo.url }}" class="speaker-img">
+                  </div>
+                  <div class="hover-overlay"></div>
+                  <p class="speaker-title">{{ speaker.title }}</p>
+                  <img class="company-logo" src="{{ speaker.company_logo.url }}">
+                </a>
+                {% endfor %}
+              </div>
+              <div class="card-section panel-desc">
+                <p>{{ panels.strategy.2.description|safe }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="large-6 cell" id="{{ panel.pk }}">
+            <div class="card panel-card">
+              <div class="card-divider panel-title">
+                <h2>
+                  Second Stage
+                </h2>
+              </div>
+              <div class="card-section panel-name">
+                <h3>
+                  {{ panels.strategy.0.name }}
+                </h3>
+              </div>
+              <div class="card-section panel-speakers">
+                {% for speaker in panels.strategy.0.speakers.all %}
+                <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                  <p class="speaker-name">{{ speaker.name }}</p>
+                  <div class="agenda-speaker-image-block">
+                    {% if speaker.moderator %}
+                    <div class="moderator-speaker">
+                      <div class="moderator-icon-outer">
+                        <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <img src="{{ speaker.photo.url }}" class="speaker-img">
+                  </div>
+                  <div class="hover-overlay"></div>
+                  <p class="speaker-title">{{ speaker.title }}</p>
+                  <img class="company-logo" src="{{ speaker.company_logo.url }}">
+                </a>
+                {% endfor %}
+              </div>
+              <div class="card-section panel-desc">
+                <p>{{ panels.strategy.0.description|safe }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="agenda-narrow">
+        <h2><span class="agenda-time">10:20 - 10:35</span>Breakout session</h2>
+        <p class="push-right">Go get some refreshments and stretch your legs.</p>
+        <h2><span class="agenda-time">10:35 - 11:20</span>Strategy panel:</h2>
+      </div>
+    </div>
+
+    <div class="panel-columns">
+      <div class="content">
+        <div class="grid-x grid-margin-x panels-grid">
+          <div class="large-6 large-offset-3 cell" id="{{ panel.pk }}">
+            <div class="card panel-card">
+              <div class="card-divider panel-title">
+                <h2>
+                  Main Stage
+                </h2>
+              </div>
+              <div class="card-section panel-name">
+                <h3>
+                  {{ panels.strategy.1.name }}
+                </h3>
+              </div>
+              <div class="card-section panel-speakers">
+                {% for speaker in panels.strategy.1.speakers.all %}
+                <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                  <p class="speaker-name">{{ speaker.name }}</p>
+                  <div class="agenda-speaker-image-block">
+                    {% if speaker.moderator %}
+                    <div class="moderator-speaker">
+                      <div class="moderator-icon-outer">
+                        <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <img src="{{ speaker.photo.url }}" class="speaker-img">
+                  </div>
+                  <div class="hover-overlay"></div>
+                  <p class="speaker-title">{{ speaker.title }}</p>
+                  <img class="company-logo" src="{{ speaker.company_logo.url }}">
+                </a>
+                {% endfor %}
+              </div>
+              <div class="card-section panel-desc">
+                <p>{{ panels.strategy.1.description|safe }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="agenda-narrow">
+        <h2><span class="agenda-time">11:20 - 11:30 </span>Breakout session</h2>
+        <p class="push-right">Get some refreshments and stretch your legs.</p>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="agenda-narrow">
+        <h2><span class="agenda-time">11:30 - 12:30 </span>Keynote 2: {% if panels.keynote2 %} {{ panels.keynote2.0.name }} {% else %} TBA {% endif %}</h2>
+        {% for speaker in panels.keynote2.0.speakers.all %}
+        <a class="card panelist-slug push-right" href="{% url 'speaker_detail' slug=speaker.slug %}">
+          <p class="speaker-name">{{ speaker.name }}</p>
+          <img src="{{ speaker.photo.url }}" class="speaker-img">
+          <div class="hover-overlay"></div>
+          <p class="speaker-title">{{ speaker.title }}</p>
+          <img class="company-logo" src="{{ speaker.company_logo.url }}">
+        </a>
+        {% endfor %}
+        <div class="push-right">{% if panels.keynote2 %} {{ panels.keynote2.0.description|safe }} {% else %} Stay tuned! {% endif %}</div>
+        <h2><span class="agenda-time">12:30 - 13:15 </span>Lunch & networking</h2>
+        <p class="push-right">Enjoy a well-deserved lunch and continue the discussions in the lobby.</p>
+        <h2><span class="agenda-time">13:15 - 14:00 </span>Financial Management Panels:</h2>
+      </div>
+    </div>
+
+    <div class="panel-columns">
+      <div class="content">
+        <div class="grid-x grid-margin-x panels-grid">
+          <div class="large-6 cell" id="{{ panel.pk }}">
+            <div class="card panel-card">
+              <div class="card-divider panel-title">
+                <h2>
+                  Main Stage
+                </h2>
+              </div>
+              <div class="card-section panel-name">
+                <h3>
+                  {{ panels.finance.1.name }}
+                </h3>
+              </div>
+              <div class="card-section panel-speakers">
+                {% for speaker in panels.finance.1.speakers.all %}
+                <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                  <p class="speaker-name">{{ speaker.name }}</p>
+                  <div class="agenda-speaker-image-block">
+                    {% if speaker.moderator %}
+                    <div class="moderator-speaker">
+                      <div class="moderator-icon-outer">
+                        <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <img src="{{ speaker.photo.url }}" class="speaker-img">
+                  </div>
+                  <div class="hover-overlay"></div>
+                  <p class="speaker-title">{{ speaker.title }}</p>
+                  <img class="company-logo" src="{{ speaker.company_logo.url }}">
+                </a>
+                {% endfor %}
+              </div>
+              <div class="card-section panel-desc">
+                <p>{{ panels.finance.1.description|safe }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="large-6 cell" id="{{ panel.pk }}">
+            <div class="card panel-card">
+              <div class="card-divider panel-title">
+                <h2>
+                  CFO Insights Forum
+                </h2>
+              </div>
+              <div class="card-section panel-name">
+                <h3>
+                  {{ panels.finance.2.name }}
+                </h3>
+              </div>
+              <div class="card-section panel-speakers">
+                {% for speaker in panels.finance.2.speakers.all %}
+                <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                  <p class="speaker-name">{{ speaker.name }}</p>
+                  <div class="agenda-speaker-image-block">
+                    {% if speaker.moderator %}
+                    <div class="moderator-speaker">
+                      <div class="moderator-icon-outer">
+                        <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <img src="{{ speaker.photo.url }}" class="speaker-img">
+                  </div>
+                  <div class="hover-overlay"></div>
+                  <p class="speaker-title">{{ speaker.title }}</p>
+                  <img class="company-logo" src="{{ speaker.company_logo.url }}">
+                </a>
+                {% endfor %}
+            </div>
+            <div class="card-section panel-desc">
+              <p>{{ panels.finance.2.description|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="agenda-narrow">
+      <h2><span class="agenda-time">14:00 - 14:15 </span>Breakout session</h2>
+      <p class="push-right">Go get some refreshments and stretch your legs.</p>
+      <h2><span class="agenda-time">14:15 - 15:00</span>Financial Management Panel:</h2>
+    </div>
+  </div>
+
+  <div class="panel-columns">
+    <div class="content">
+      <div class="grid-x grid-margin-x panels-grid">
+        <div class="large-6 large-offset-3 cell" id="{{ panel.pk }}">
+          <div class="card panel-card">
+            <div class="card-divider panel-title">
+              <h2>
+                Main Stage
+              </h2>
+            </div>
+            <div class="card-section panel-name">
+              <h3>
+                {{ panels.finance.0.name }}
+              </h3>
+            </div>
+            <div class="card-section panel-speakers">
+              {% for speaker in panels.finance.0.speakers.all %}
+              <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                <p class="speaker-name">{{ speaker.name }}</p>
+                <div class="agenda-speaker-image-block">
+                  {% if speaker.moderator %}
+                  <div class="moderator-speaker">
+                    <div class="moderator-icon-outer">
+                      <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <img src="{{ speaker.photo.url }}" class="speaker-img">
+                </div>
+                <div class="hover-overlay"></div>
+                <p class="speaker-title">{{ speaker.title }}</p>
+                <img class="company-logo" src="{{ speaker.company_logo.url }}">
+              </a>
+              {% endfor %}
+            </div>
+            <div class="card-section panel-desc">
+              <p>{{ panels.finance.0.description|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="agenda-narrow">
+      <h2><span class="agenda-time">15:00 - 15:15 </span>Breakout session</h2>
+      <p class="push-right">Get some refreshments and stretch your legs.</p>
+      <h2><span class="agenda-time">15:15 - 16:00 </span>Future Trends Panels:</h2>
+    </div>
+  </div>
+
+  <div class="panel-columns">
+    <div class="content">
+      <div class="grid-x grid-margin-x panels-grid">
+        <div class="large-6 cell" id="{{ panel.pk }}">
+          <div class="card panel-card">
+            <div class="card-divider panel-title">
+              <h2>
+                Main Stage
+              </h2>
+            </div>
+            <div class="card-section panel-name">
+              <h3>
+                {{ panels.future.0.name }}
+              </h3>
+            </div>
+            <div class="card-section panel-speakers">
+              {% for speaker in panels.future.0.speakers.all %}
+              <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                <p class="speaker-name">{{ speaker.name }}</p>
+                <div class="agenda-speaker-image-block">
+                  {% if speaker.moderator %}
+                  <div class="moderator-speaker">
+                    <div class="moderator-icon-outer">
+                      <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <img src="{{ speaker.photo.url }}" class="speaker-img">
+                </div>
+                <div class="hover-overlay"></div>
+                <p class="speaker-title">{{ speaker.title }}</p>
+                <img class="company-logo" src="{{ speaker.company_logo.url }}">
+              </a>
+              {% endfor %}
+            </div>
+            <div class="card-section panel-desc">
+              <p>{{ panels.future.0.description|safe }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="large-6 cell" id="{{ panel.pk }}">
+          <div class="card panel-card">
+            <div class="card-divider panel-title">
+              <h2>
+                Second Stage
+              </h2>
+            </div>
+            <div class="card-section panel-name">
+              <h3>
+                {{ panels.future.1.name }}
+              </h3>
+            </div>
+            <div class="card-section panel-speakers">
+              {% for speaker in panels.future.1.speakers.all %}
+              <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                <p class="speaker-name">{{ speaker.name }}</p>
+                <div class="agenda-speaker-image-block">
+                  {% if speaker.moderator %}
+                  <div class="moderator-speaker">
+                    <div class="moderator-icon-outer">
+                      <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <img src="{{ speaker.photo.url }}" class="speaker-img">
+                </div>
+                <div class="hover-overlay"></div>
+                <p class="speaker-title">{{ speaker.title }}</p>
+                <img class="company-logo" src="{{ speaker.company_logo.url }}">
+              </a>
+              {% endfor %}
+            </div>
+            <div class="card-section panel-desc">
+              <p>{{ panels.future.1.description|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    <div class="agenda-narrow">
+      <h2><span class="agenda-time">16:00 - 16:15 </span>Breakout session</h2>
+      <p class="push-right">Get some refreshments and stretch your legs.</p>
+      <h2><span class="agenda-time">16:15 - 17:00 </span>Future Trends Panel:</h2>
+    </div>
+  </div>
+
+  <div class="panel-columns">
+    <div class="content">
+      <div class="grid-x grid-margin-x panels-grid">
+        <div class="large-6 large-offset-3 cell" id="{{ panel.pk }}">
+          <div class="card panel-card">
+            <div class="card-divider panel-title">
+              <h2>
+                Main Stage
+              </h2>
+            </div>
+            <div class="card-section panel-name">
+              <h3>
+                {{ panels.future.2.name }}
+              </h3>
+            </div>
+            <div class="card-section panel-speakers">
+              {% for speaker in panels.future.2.speakers.all %}
+              <a class="card panelist-slug" href="{% url 'speaker_detail' slug=speaker.slug %}">
+                <p class="speaker-name">{{ speaker.name }}</p>
+                <div class="agenda-speaker-image-block">
+                  {% if speaker.moderator %}
+                  <div class="moderator-speaker">
+                    <div class="moderator-icon-outer">
+                      <i class="fas fa-microphone moderator-icon" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  {% endif %}
+                  <img src="{{ speaker.photo.url }}" class="speaker-img">
+                </div>
+                <div class="hover-overlay"></div>
+                <p class="speaker-title">{{ speaker.title }}</p>
+                <img class="company-logo" src="{{ speaker.company_logo.url }}">
+              </a>
+              {% endfor %}
+            </div>
+            <div class="card-section panel-desc">
+              <p>{{ panels.future.2.description|safe }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="agenda-narrow">
+      <h2 id="{{ panels.5.0.1.pk }}"><span class="agenda-time"">17:05 - 17:20 </span>Keynote 3: {% if panels.keynote3 %} {{ panels.keynote3.0.name }} {% else %} TBA {% endif %}</h2>
+      {% for speaker in panels.keynote3.0.speakers.all %}
+      <a class="card panelist-slug push-right" href="{% url 'speaker_detail' slug=speaker.slug %}">
+        <p class="speaker-name">{{ speaker.name }}</p>
+        <img src="{{ speaker.photo.url }}" class="speaker-img">
+        <div class="hover-overlay"></div>
+        <p class="speaker-title">{{ speaker.title }}</p>
+        <img class="company-logo" src="{{ speaker.company_logo.url }}">
+      </a>
+      {% endfor %}
+      <div class="push-right">{% if panels.keynote3.0 %} {{ panels.keynote3.0.description|safe }} {% else %} Stay tuned! {% endif %}</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="agenda-narrow">
+      <h2><span class="agenda-time">17:20 - 17:25 </span>Closing Remarks</h2>
+      <p class="push-right">A big thank you to all our attendees, speakers and partners as we bring CFO Insights 2018 to an official close.</p>
+      <h2><span class="agenda-time">17:25 - 18:00 </span>Post-conference drinks</h2>
+      <p class="push-right">Join us in the late afternoon as we end the day with some drinks. This will be the best time to network without all the conference hassle.</p>
+      <h2><span class="agenda-time">18:00 </span>Done!</h2>
+      <p class="push-right">See you next year!</p>
+    </div>
+  </div>
+</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'agenda/js/agenda.js' %}"></script>
+{% endblock %}

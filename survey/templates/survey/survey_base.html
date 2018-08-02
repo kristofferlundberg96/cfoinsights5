@@ -1,0 +1,86 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+
+{% block title %} CFO Insights 2018 International Survey {% endblock %}
+
+{% block ogimage %}
+<meta property='og:image' content="{% static 'survey/survey_og.jpg' %}"/>
+{% endblock %}
+
+{% block ogtitle %}
+<meta property='og:title' content="CFO Insights CFO Survey 2018"/>
+{% endblock %}
+
+{% block ogdescription %}
+<meta property='og:description' content="Student-driven CFO Insights is conducting our first survey in collaboration with KPMG. We are looking to find out how a modern CFO prioritizes your time, what challenges you are facing and what opportunities you are considering."/>
+{% endblock %}
+
+
+{% block header %}
+<div class="header non-sticky">
+  <div class="title-bar" data-responsive-toggle="top-menu" data-hide-for="large">
+    <div class="title-bar-left">
+      <div class="title-bar-title">
+        <img src="{% static 'img/logo.png' %}" class="logo" alt="CFO Insights">
+      </div>
+    </div>
+    <div class="title-bar-right">
+      <button class="menu-icon" type="button" data-toggle></button>
+    </div>
+  </div>
+  <div class="top-bar" id="top-menu">
+    <div class="top-bar-left" id="desktop-logo">
+      <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" class="logo" alt="CFO Insights"></a>
+    </div>
+    <div class="top-bar-right">
+      <ul class="vertical large-horizontal menu">
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'index' %}#agenda">Agenda</a></li>
+        <li><a href="{% url 'index' %}#speakers">Speakers</a></li>
+        <li><a href="{% url 'index' %}#sponsors">Sponsors</a></li>
+        <li><a href="{% url 'index' %}#about">About</a></li>
+        <li><a href="{% url 'index' %}#tickets">Register now</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock%}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'survey/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="survey-wrapper" id="survey-{% block survey_page %} {% endblock %}">
+  <div class="content">
+    <div class="survey-content-bg">
+      {% block survey_content %}
+      {% endblock %}
+    </div>
+    {% block survey_buttons %}
+    {% endblock %}
+    <div class="powered-by">
+      <span class="children">
+        Powered by: <img src="{% static 'survey/kpmg.png' %}" alt="KPMG"/>
+      </span>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %} {% endblock %}
+
+{% block scripts %}
+<link href="https://surveyjs.azureedge.net/1.0.11/survey.css" type="text/css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.6.1/Sortable.min.js"></script>
+<script type="text/javascript" src="{% static 'survey/js/survey.js' %}"></script>
+<script src="{% static 'survey/js/survey.jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'survey/js/surveyjs.sortablejs.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+{% block survey_scripts %}
+
+{% endblock %}
+
+{% block intercom %}
+{% endblock %}
+{% endblock %}
